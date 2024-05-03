@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import cvlib as cv
 from cvlib.object_detection import draw_bbox
 
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(0)
 ret, frame = cap.read()
 cap.release()
 box, label, c_score = cv.detect_common_objects(frame, model='yolov3-tiny')
