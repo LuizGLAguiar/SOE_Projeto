@@ -1,9 +1,14 @@
 // https://lindevs.com/yolov4-object-detection-using-opencv
 
 #include <iostream>
+#include <cmath>
 #include <ctime>
 #include <string.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdlib.h> 
 #include <fstream>
+#include <stdio.h>
 #include <opencv2/opencv.hpp>
 
 using namespace cv;
@@ -15,6 +20,13 @@ int main(int argc, char *argv[])
 	{
 		std::cout << "Indique a imagem a ser analisada.\n";
 		return -1;
+	}
+
+	int fd = open("dados.txt", O_WRONLY | O_APPEND | O_CREAT, S_IRUSR | S_IWUSR);
+	if(fd == -1)
+	{
+		printf("Erro na abertura do arquivo.\n");
+		exit(-1);
 	}
 
 	std::vector<std::string> classes;
@@ -33,10 +45,11 @@ int main(int argc, char *argv[])
 	std::vector<float> scores;
 	std::vector<Rect> boxes;
 
-	int media = 0;
+	float media = 0;
 
-
-	for(int i = 1; i < argc; i++){
+	// Contagem de pessoas nas fotos
+	for(int i = 1; i < argc; i++)
+	{
 		Mat img = imread(argv[i]);
 
 		model.detect(img, classIds, scores, boxes, 0.6, 0.4);
@@ -56,7 +69,25 @@ int main(int argc, char *argv[])
 		imwrite(filename, img);
 	}
 
-	media /= argc;
+	media = std::ceil(media/argc);
+	std::time_t t = std::time(nullptr);
+    
+    // Converte para tempo local
+    std::tm* agora = std::localtime(&t);
+    
+    // Obtém as partes individuais do tempo
+    int ano = agora->tm_year + 1900;  // tm_year é o número de anos desde 1900
+    int mes = agora->tm_mon + 1;     // tm_mon é o número de meses desde janeiro (0-11)
+    int dia = agora->tm_mday;          // Dia do mês
+    int hora = agora->tm_hour;         // Hora (0-23)
+    int minuto = agora->tm_min;        // Minutos (0-59)
+
+    char text_dados[100];
+    sprintf(text_dados, "%d %d %d %d %d %.0f", dia, mes, ano, hora, minuto, media);
+    write(fd, text_dados, strlen(text_dados));
+    write(fd, "\n", 1);
+
+	close(fd);
 
 	return 0;
 }
