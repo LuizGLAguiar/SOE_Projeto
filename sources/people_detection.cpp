@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 
-	int fd = open("dados.txt", O_WRONLY | O_APPEND | O_CREAT, S_IRUSR | S_IWUSR);
+	int fd = open("/home/luiz/Desktop/SOE_Projeto/sources/dados.txt", O_WRONLY | O_APPEND | O_CREAT, S_IRUSR | S_IWUSR);
 	if(fd == -1)
 	{
 		printf("Erro na abertura do arquivo.\n");
@@ -30,13 +30,13 @@ int main(int argc, char *argv[])
 	}
 
 	std::vector<std::string> classes;
-	std::ifstream file("files/coco.names");
+	std::ifstream file("/home/luiz/Desktop/SOE_Projeto/sources/files/coco.names");
 	std::string line;
 	while (std::getline(file, line)) {
 		classes.push_back(line);
 	}
 
-	Net net = readNetFromDarknet("files/yolov4.cfg", "files/yolov4.weights");
+	Net net = readNetFromDarknet("/home/luiz/Desktop/SOE_Projeto/sources/files/yolov4.cfg", "/home/luiz/Desktop/SOE_Projeto/sources/files/yolov4.weights");
 
 	DetectionModel model = DetectionModel(net);
 	model.setInputParams(1 / 255.0, Size(416, 416), Scalar(), true);
@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
 		}	
 		media += classIds.size();
 		char filename[100];
-		sprintf(filename,"../photos/pics_analyzed/foto_%d.jpg", i);
+		sprintf(filename,"/home/luiz/Desktop/SOE_Projeto/photos/pics_analyzed/foto_%d.jpg", i);
 		imwrite(filename, img);
 	}
 
