@@ -19,7 +19,7 @@ int main() {
         if (!strcmp(telegramBot.getLastMessage().c_str(), "/Dia"))
         {   
             telegramBot.sendMessage(telegramBot.getLastChatID(), "O gráfico do dia é o seguinte:\n");
-			std::string photoPath = "../graphs/dia.jpg"; 
+			std::string photoPath = "../graphs/dia.png"; 
             telegramBot.sendPhoto(telegramBot.getLastChatID(), photoPath);
 			delay(5000);
 			telegramBot.sendMessage(telegramBot.getLastChatID(), "Olá, seja bem-vindo!\nPor favor faça click em /Dia para obter o gráfico do dia ou em /Semana para o gráfico da semana");
@@ -28,7 +28,7 @@ int main() {
 		else if (!strcmp(telegramBot.getLastMessage().c_str(), "/Semana"))
         {   
             telegramBot.sendMessage(telegramBot.getLastChatID(), "O gráfico da semana é o seguinte:\n");
-			std::string photoPath = "../graphs/semana.jpg"; 
+			std::string photoPath = "../graphs/semana.png"; 
             telegramBot.sendPhoto(telegramBot.getLastChatID(), photoPath);
 			delay(5000);
 			telegramBot.sendMessage(telegramBot.getLastChatID(), "Olá, seja bem-vindo!\nPor favor faça click em /Dia para obter o gráfico do dia ou em /Semana para o gráfico da semana");
