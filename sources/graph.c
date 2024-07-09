@@ -51,7 +51,7 @@ int main() {
     }
 
     fprintf(gnuplotScript, "set terminal png size 1920,1080\n");
-    fprintf(gnuplotScript, "set output 'grafico.jpg'\n");
+    fprintf(gnuplotScript, "set output '../graphs/dia.png'\n");
     fprintf(gnuplotScript, "set xlabel 'Hora'\n");
     fprintf(gnuplotScript, "set ylabel 'Número de Pessoas'\n");
     fprintf(gnuplotScript, "set ytics 25\n"); // Ajuste para incrementar de 25 em 25
@@ -80,7 +80,7 @@ int main() {
 
     pclose(gnuplotPipe);
 
-    printf("Gráfico gerado como 'grafico.jpg'\n");
+    printf("Gráfico gerado como '../graphs/dia.png'\n");
 
     return 0;
 }
